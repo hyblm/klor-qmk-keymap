@@ -5,6 +5,18 @@
 #endif
 
 // Left-hand home row mods
+#define  LALT_T_ LALT_T(_______)
+#define  LCTL_T_ LCTL_T(_______)
+#define  LSFT_T_ LSFT_T(_______)
+#define  LGUI_T_ LGUI_T(_______)
+
+// Right-hand home row mods
+#define  RALT_T_ LALT_T(_______)
+#define  RCTL_T_ RCTL_T(_______)
+#define  RSFT_T_ RSFT_T(_______)
+#define  RGUI_T_ RGUI_T(_______)
+
+// Left-hand home row mods
 #define GUI_R LGUI_T(KC_R)
 #define SFT_N LSFT_T(KC_N)
 #define CTR_T LCTL_T(KC_T)
@@ -16,20 +28,39 @@
 #define SFT_A RSFT_T(KC_A)
 #define GUI_E RGUI_T(KC_E)
 
+#define LT_SYM LT(SYM, _______)
+#define LT_NAV LT(NAV, _______)
+
 // clang-format off
-typedef enum layer {
+enum layer_names {
     // BASE,
     DHORF=0, QWERTY, GRAPHITE, // Base keyboard layouts
-    MODS, SYM, NAV, GAME, GAME_NAV, MOUSE,
+    HOME_ROW_MODS, SYM, NAV, GAME, GAME_NAV, MOUSE,
     END
-} Layer;
+};
+
+enum my_keycodes {
+    LYR_DHORF = SAFE_RANGE, LYR_QWERTY, LYR_GRAPHITE,
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [DHORF] = LAYOUT(
-                KC_V,  KC_L,  KC_H, LT(NAV, KC_K), KC_Q,                   KC_J,   KC_F,    KC_O,    KC_U, KC_COMM,
-        KC_TAB, KC_S, GUI_R, SFT_N,        CTR_T, ALT_W,                   ALT_Y, CTR_C,   SFT_A,   GUI_E,    KC_I, QK_MAKE,
-        KC_ESC, KC_Z,  KC_X,  KC_M,         KC_D,  KC_B, KC_MUTE, KC_MPLY, KC_P,   KC_G, KC_QUOT, KC_SCLN,  KC_DOT, KC_RSFT,
-        _______,  OS_LSFT, LT(SYM, KC_SPC),   LT(MOUSE, S(KC_MINS)),       _______, LT(SYM, KC_BSPC), OS_RSFT, _______
+                    KC_V,    KC_L,    KC_H, LT(NAV, KC_K), KC_Q,                   KC_J,   KC_F,    KC_O,    KC_U, KC_COMM,
+         KC_TAB,    KC_S,   GUI_R,   SFT_N,   CTR_T,   ALT_W,                   ALT_Y, CTR_C,   SFT_A,   GUI_E,    KC_I, QK_MAKE,
+         KC_ESC,    KC_Z,    KC_X,    KC_M,    KC_D,    KC_B, KC_MUTE, KC_MPLY, KC_P,   KC_G, KC_QUOT, KC_SCLN,  KC_DOT, KC_RSFT,
+        _______, OS_LSFT, LT(SYM, KC_SPC),   LT(MOUSE, S(KC_MINS)),       _______, LT(SYM, KC_BSPC), OS_RSFT, _______
+    ),
+    [QWERTY] = LAYOUT(
+                    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+         KC_TAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, QK_MAKE,
+         KC_ESC,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE, KC_MPLY,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,
+                          _______, OS_LSFT,  KC_SPC, _______,                   _______, KC_BSPC, OS_RSFT, _______
+    ),
+    [HOME_ROW_MODS] = LAYOUT(
+                 _______, _______, _______,  LT_NAV, _______,                   _______, _______, _______, _______, _______,
+        _______, _______, LGUI_T_, LSFT_T_, LCTL_T_, LALT_T_,                   RALT_T_, RCTL_T_, RSFT_T_, RGUI_T_, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                          _______, _______,  LT_SYM, _______,                   _______,  LT_SYM, _______, _______
     ),
     [SYM] = LAYOUT(
                 _______, KC_LBRC, S(KC_LBRC), S(KC_9), S(KC_COMM),                _______, KC_7, KC_8, KC_9, KC_0,
@@ -39,8 +70,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [NAV] = LAYOUT(
                  _______, _______, _______, _______, _______,                    _______, KC_PGUP, _______, KC_PGDN, _______,
-        _______, _______, _______, _______, _______, _______,                    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, QK_MAKE,
-        _______, _______, _______, _______, _______, _______,  _______, _______, KC_MINS, _______, _______, _______, _______, KC_RSFT,
+      LYR_DHORF, _______, _______, _______, _______, _______,                    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, QK_MAKE,
+     LYR_QWERTY, _______, _______, _______, _______, _______,  _______, _______, KC_MINS, _______, _______, _______, _______, KC_RSFT,
                           _______, _______, _______, _______,                    _______, _______, _______, _______
     ),
     [MOUSE] = LAYOUT(
@@ -118,4 +149,28 @@ bool oled_task_user(void) {
 
     return true;
 }
-#endif
+#endif // OLED_ENABLE
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LYR_DHORF:
+            if (record->event.pressed) {
+                // default_layer_set(1UL << DHORF | 1UL << HOME_ROW_MODS);
+            } else {
+            }
+            break;
+        case LYR_QWERTY:
+            if (record->event.pressed) {
+                default_layer_set(1UL << QWERTY);
+                layer_on(HOME_ROW_MODS);
+            } else {
+            }
+            break;
+        case LYR_GRAPHITE:
+            if (record->event.pressed) {
+            } else {
+            }
+            break;
+    }
+    return true;
+}
