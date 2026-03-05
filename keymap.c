@@ -4,31 +4,41 @@
 #    include "keymap.h"
 #endif
 
-// Left-hand home row mods
-#define  LALT_T_ LALT_T(_______)
-#define  LCTL_T_ LCTL_T(_______)
-#define  LSFT_T_ LSFT_T(_______)
-#define  LGUI_T_ LGUI_T(_______)
 
-// Right-hand home row mods
-#define  RALT_T_ LALT_T(_______)
-#define  RCTL_T_ RCTL_T(_______)
-#define  RSFT_T_ RSFT_T(_______)
-#define  RGUI_T_ RGUI_T(_______)
+#define LGUI_R LGUI_T(KC_R)
+#define LSFT_T LSFT_T(KC_T)
+#define LCTL_S LCTL_T(KC_S)
+#define LALT_G LALT_T(KC_G)
+#define RALT_Y LALT_T(KC_Y)
+#define RCTL_H RCTL_T(KC_H)
+#define RSFT_A RSFT_T(KC_A)
+#define RGUI_E RGUI_T(KC_E)
 
 // Left-hand home row mods
-#define GUI_R LGUI_T(KC_R)
-#define SFT_N LSFT_T(KC_N)
-#define CTR_T LCTL_T(KC_T)
-#define ALT_W LALT_T(KC_W)
+#define  LGUI_S LGUI_T(KC_S)
+#define  LSFT_D LSFT_T(KC_D)
+#define  LCTL_F LCTL_T(KC_F)
+#define  LALT_G LALT_T(KC_G)
+#define  RALT_H LALT_T(KC_H)
+#define  RCTL_J RCTL_T(KC_J)
+#define  RSFT_K RSFT_T(KC_K)
+#define  RGUI_L RGUI_T(KC_L)
 
+#define  L_NAV_K LT(NAV, KC_K)
+#define  L_NAV_R LT(NAV, KC_R)
+
+// Left-hand home row mods
+#define LGUI_R LGUI_T(KC_R)
+#define LSFT_N LSFT_T(KC_N)
+#define LCTR_T LCTL_T(KC_T)
+#define LALT_W LALT_T(KC_W)
 // Right-hand home row mods
-#define ALT_Y LALT_T(KC_Y)
-#define CTR_C RCTL_T(KC_C)
-#define SFT_A RSFT_T(KC_A)
-#define GUI_E RGUI_T(KC_E)
+#define RALT_Y LALT_T(KC_Y)
+#define RCTR_C RCTL_T(KC_C)
+#define RSFT_A RSFT_T(KC_A)
+#define RGUI_E RGUI_T(KC_E)
 
-#define LT_SYM LT(SYM, _______)
+#define L_SYM__ LT(SYM, KC_SPC)
 #define LT_NAV LT(NAV, _______)
 
 // clang-format off
@@ -41,26 +51,27 @@ enum layer_names {
 
 enum my_keycodes {
     LYR_DHORF = SAFE_RANGE, LYR_QWERTY, LYR_GRAPHITE,
+    KG_COMM, KG_MINS, KG_SLSH,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [DHORF] = LAYOUT(
-                    KC_V,    KC_L,    KC_H, LT(NAV, KC_K), KC_Q,                   KC_J,   KC_F,    KC_O,    KC_U, KC_COMM,
+                    KC_V,    KC_L,    KC_H, L_NAV_K,    KC_Q,                   KC_J,   KC_F,    KC_O,    KC_U, KC_COMM,
          KC_TAB,    KC_S,   GUI_R,   SFT_N,   CTR_T,   ALT_W,                   ALT_Y, CTR_C,   SFT_A,   GUI_E,    KC_I, QK_MAKE,
          KC_ESC,    KC_Z,    KC_X,    KC_M,    KC_D,    KC_B, KC_MUTE, KC_MPLY, KC_P,   KC_G, KC_QUOT, KC_SCLN,  KC_DOT, KC_RSFT,
-        _______, OS_LSFT, LT(SYM, KC_SPC),   LT(MOUSE, S(KC_MINS)),       _______, LT(SYM, KC_BSPC), OS_RSFT, _______
+        _______, OS_LSFT, L_SYM__,   LT(MOUSE, S(KC_MINS)),       _______, LT(SYM, KC_BSPC), OS_RSFT, _______
     ),
     [QWERTY] = LAYOUT(
-                    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-         KC_TAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, QK_MAKE,
-         KC_ESC,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE, KC_MPLY,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,
-                          _______, OS_LSFT,  KC_SPC, _______,                   _______, KC_BSPC, OS_RSFT, _______
+                    KC_Q,    KC_W,    KC_E, L_NAV_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
+        _______,    KC_A,  LGUI_S,  LSFT_D,  LCTL_F,  LALT_G,                    RALT_H,  RCTL_J,  RSFT_K,  RGUI_L, KC_SCLN, _______,
+        _______,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, _______, _______,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, _______,
+                          _______, _______, _______, _______,                   _______, _______, _______, _______
     ),
-    [HOME_ROW_MODS] = LAYOUT(
-                 _______, _______, _______,  LT_NAV, _______,                   _______, _______, _______, _______, _______,
-        _______, _______, LGUI_T_, LSFT_T_, LCTL_T_, LALT_T_,                   RALT_T_, RCTL_T_, RSFT_T_, RGUI_T_, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-                          _______, _______,  LT_SYM, _______,                   _______,  LT_SYM, _______, _______
+    [GRAPHITE] = LAYOUT(
+                    KC_B,    KC_L,    KC_D, L_NAV_W,    KC_Z,                   KG_COMM,    KC_F,    KC_O,    KC_U,    KC_J,
+        _______,    KC_N,  LGUI_R,  LSFT_T,  LCTL_S,  LALT_G,                    RALT_Y,  RCTL_H,  RSFT_A,  RGUI_E,    KC_I, _______,
+        _______,    KC_Q,    KC_X,    KC_M,    KC_C,    KC_V, _______, _______,    KC_K,    KC_P,  KC_DOT, KG_MINS, KG_SLSH, _______,
+                          _______, _______, _______, _______,                   _______, _______, _______, _______
     ),
     [SYM] = LAYOUT(
                 _______, KC_LBRC, S(KC_LBRC), S(KC_9), S(KC_COMM),                _______, KC_7, KC_8, KC_9, KC_0,
@@ -69,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   TG(3), _______,    _______, _______,                            _______,  _______, _______, _______
     ),
     [NAV] = LAYOUT(
-                 _______, _______, _______, _______, _______,                    _______, KC_PGUP, _______, KC_PGDN, _______,
+            LYR_GRAPHITE, _______, _______, _______, _______,                    _______, KC_PGUP, _______, KC_PGDN, _______,
       LYR_DHORF, _______, _______, _______, _______, _______,                    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, QK_MAKE,
      LYR_QWERTY, _______, _______, _______, _______, _______,  _______, _______, KC_MINS, _______, _______, _______, _______, KC_RSFT,
                           _______, _______, _______, _______,                    _______, _______, _______, _______
@@ -153,24 +164,51 @@ bool oled_task_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case KG_COMM:
+            int mods = get_mods();
+            if (mods == MOD_BIT(KC_LSFT) || mods == MOD_BIT(KC_RSFT)) {
+                tap_code(KC_UNDERSCORE);
+            }
+            break;
+        case KG_MINS:
+            if (record->event.pressed) {
+                tap_code(KC_MINS);
+            }
+            break;
+        case KG_SLSH:
+            if (record->event.pressed) {
+                tap_code(KC_SLSH);
+            }
+            break;
+        case LGUI_T_:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_S);
+                return false; // Return false to ignore further processing of key
+            } else {
+                return true;
+            }
+            break;
         case LYR_DHORF:
             if (record->event.pressed) {
-                // default_layer_set(1UL << DHORF | 1UL << HOME_ROW_MODS);
+                default_layer_set(1UL << DHORF);
             } else {
             }
             break;
         case LYR_QWERTY:
             if (record->event.pressed) {
-                // default_layer_set(1UL << QWERTY);
-                // layer_on(HOME_ROW_MODS);
+                default_layer_set(1UL << QWERTY | 1UL << DHORF);
             } else {
             }
             break;
         case LYR_GRAPHITE:
             if (record->event.pressed) {
+                default_layer_set(1UL << GRAPHITE | 1UL << DHORF);
             } else {
             }
             break;
+        default:
+            return true;
+            break;
     }
-    return true;
+    return false;
 }
