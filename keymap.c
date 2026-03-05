@@ -161,8 +161,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case LYR_QWERTY:
             if (record->event.pressed) {
-                default_layer_set(1UL << QWERTY);
-                layer_on(HOME_ROW_MODS);
+                // default_layer_set(1UL << QWERTY);
+                // layer_on(HOME_ROW_MODS);
             } else {
             }
             break;
